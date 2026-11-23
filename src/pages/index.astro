@@ -14,6 +14,7 @@ const projects = (await getCollection('projects'))
     <nav>
       <a href="/">home</a>
       <a href="/log">log</a>
+      <a href="/projects">projects</a>
     </nav>
   </header>
 
@@ -27,7 +28,7 @@ const projects = (await getCollection('projects'))
         {projects.map((p) => (
           <li>
             <span>{String(p.data.order).padStart(2, '0')}</span>
-            <span>{p.data.title}</span>
+            <a href={`/projects/${p.id}`}>{p.data.title}</a>
             <span class="status">{p.data.status}</span>
             <span class="dim">{p.data.blurb}</span>
           </li>
