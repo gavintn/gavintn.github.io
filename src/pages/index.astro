@@ -1,4 +1,4 @@
----
+﻿---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 
@@ -18,31 +18,6 @@ const projects = [
       <a href="/log">log</a>
     </nav>
   </header>
-
-<aside id="face-wrap">
-  <div id="face" role="img" aria-label="Glitched 3D scan of gavintn's face"></div>
-  <p id="face-bark"></p>
-</aside>
-<script>
-  import '../scripts/face.js';
-</script>
-
-<style>
-  #face-wrap {
-    position: fixed; top: 0; bottom: 0; right: 0; margin: auto 0;
-    width: min(52vw, 1000px); height: min(100vh, calc(min(52vw, 1000px) * 0.95));
-    display: flex; flex-direction: column;
-    mix-blend-mode: screen; pointer-events: none; z-index: 0;
-  }
-  #face { flex: 1; min-height: 0; }
-  #face-bark {
-    height: 3rem; margin: 0; display: flex; align-items: center;
-    justify-content: center; opacity: 0; font-size: 0.9rem; color: #cfcfcf;
-  }
-  @media (max-width: 1100px) {
-    #face-wrap { position: relative; width: 100%; height: 55vh; }
-  }
-</style>
 
   <main>
     <h1>gavintn</h1>
