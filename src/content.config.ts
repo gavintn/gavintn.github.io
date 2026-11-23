@@ -11,4 +11,14 @@ const log = defineCollection({
   }),
 });
 
-export const collections = { log };
+const projects = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
+  schema: z.object({
+    title: z.string(),
+    order: z.number(),
+    status: z.enum(['shipped', 'in progress', 'planned']),
+    blurb: z.string(),
+  }),
+});
+
+export const collections = { log, projects };

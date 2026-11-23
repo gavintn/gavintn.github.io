@@ -6,10 +6,8 @@ const entries = (await getCollection('log'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
 
-const projects = [
-  { n: '01', name: 'homelab', status: 'shipped', blurb: 'proxmox home server' },
-  { n: '02', name: 'gpu server', status: 'planned', blurb: 'two rtx 3090s' },
-];
+const projects = (await getCollection('projects'))
+  .sort((a, b) => a.data.order - b.data.order);
 ---
 <Base title="gavintn">
   <header>
@@ -28,10 +26,10 @@ const projects = [
       <ol class="rows">
         {projects.map((p) => (
           <li>
-            <span>{p.n}</span>
-            <span>{p.name}</span>
-            <span class="status">{p.status}</span>
-            <span class="dim">{p.blurb}</span>
+            <span>{String(p.data.order).padStart(2, '0')}</span>
+            <span>{p.data.title}</span>
+            <span class="status">{p.data.status}</span>
+            <span class="dim">{p.data.blurb}</span>
           </li>
         ))}
       </ol>
