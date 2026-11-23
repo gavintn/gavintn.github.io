@@ -1,9 +1,88 @@
 ---
+import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
+
+const entries = (await getCollection('log'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+const projects = [
+  { n: '01', name: 'homelab', status: 'shipped', blurb: 'proxmox home server' },
+  { n: '02', name: 'gpu server', status: 'planned', blurb: 'two rtx 3090s' },
+];
 ---
 <Base title="gavintn">
-  <h1>gavintn</h1>
-  <p>/ CS student exploring hardware, AI infrastructure and software</p>
-</Base>
+  <header>
+    <nav>
+      <a href="/">home</a>
+      <a href="/log">log</a>
+    </nav>
+  </header>
 
-<a href="/log">log</a>
+<aside id="face-wrap">
+  <div id="face" role="img" aria-label="Glitched 3D scan of gavintn's face"></div>
+  <p id="face-bark"></p>
+</aside>
+<script>
+  import '../scripts/face.js';
+</script>
+
+<style>
+  #face-wrap {
+    position: fixed; top: 0; bottom: 0; right: 0; margin: auto 0;
+    width: min(52vw, 1000px); height: min(100vh, calc(min(52vw, 1000px) * 0.95));
+    display: flex; flex-direction: column;
+    mix-blend-mode: screen; pointer-events: none; z-index: 0;
+  }
+  #face { flex: 1; min-height: 0; }
+  #face-bark {
+    height: 3rem; margin: 0; display: flex; align-items: center;
+    justify-content: center; opacity: 0; font-size: 0.9rem; color: #cfcfcf;
+  }
+  @media (max-width: 1100px) {
+    #face-wrap { position: relative; width: 100%; height: 55vh; }
+  }
+</style>
+
+  <main>
+    <h1>gavintn</h1>
+    <p class="role">cs student exploring hardware, ai infrastructure and software</p>
+
+    <section>
+      <h2>projects</h2>
+      <ol class="rows">
+        {projects.map((p) => (
+          <li>
+            <span>{p.n}</span>
+            <span>{p.name}</span>
+            <span class="status">{p.status}</span>
+            <span class="dim">{p.blurb}</span>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section>
+      <h2>log</h2>
+      {entries.length === 0 ? (
+        <p class="dim">first entries coming soon.</p>
+      ) : (
+        <ul class="rows">
+          {entries.map((e) => (
+            <li>
+              <span class="dim">{e.data.date.toISOString().slice(0, 10)}</span>
+              <a href={`/log/${e.id}`}>{e.data.title}</a>
+              <span class="dim">{e.data.type}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+      <p><a href="/log">all entries</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <a href="https://github.com/gavintn">github</a>
+    <span class="dim">type set in ia writer mono</span>
+  </footer>
+</Base>

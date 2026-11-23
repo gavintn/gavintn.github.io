@@ -1,8 +1,8 @@
 :root {
-  --bg: #000;
+  --bg: #0f0f0f;
   --fg: #fff;
   --dim: #888;
-  --accent: #00e5a0;
+  --accent: #7aa2ff;
 --font-head: 'iA Writer Mono', monospace;
 --font-body: 'iA Writer Mono', monospace;
 }
@@ -23,9 +23,47 @@ body {
 h1, h2 {
   font-family: var(--font-head);
   font-weight: 400;
-  text-transform: uppercase;
+  text-transform: lowercase;
+  letter-spacing: 0.3em;
 }
 
 h1 {
   font-size: clamp(2.5rem, 10vw, 6rem);
+}
+
+a { color: var(--fg); }
+a:hover { color: var(--accent); }
+
+header nav { display: flex; gap: 1.5rem; }
+
+main { max-width: 70rem; }
+h1 { margin: 4rem 0 1rem; line-height: 1; }
+h2 {
+  font-size: 1rem;
+  color: var(--dim);
+  letter-spacing: 0.2em;
+  margin: 4rem 0 1rem;
+}
+.role { color: var(--dim); max-width: 40ch; }
+.dim { color: var(--dim); }
+.status { color: var(--accent); }
+
+.rows { list-style: none; padding: 0; margin: 0; }
+.rows li {
+  display: grid;
+  grid-template-columns: 3rem 12rem 8rem 1fr;
+  gap: 0.25rem 1rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid #333;
+}
+
+footer {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 6rem;
+  padding-bottom: 2rem;
+}
+
+@media (max-width: 40rem) {
+  .rows li { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; }
 }

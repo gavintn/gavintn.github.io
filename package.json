@@ -15,6 +15,7 @@
     "@fontsource/ia-writer-mono": "^5.3.0",
     "@fontsource/share-tech-mono": "^5.3.0",
     "@fontsource/vt323": "^5.3.0",
-    "astro": "^7.4.13"
+    "astro": "^7.4.13",
+    "three": "^0.187.0"
   }
 }
