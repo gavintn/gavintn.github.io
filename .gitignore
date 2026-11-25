@@ -22,3 +22,27 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# secrets
+.env.*
+*.pem
+*.key
+*.crt
+id_rsa*
+*.kdbx
+
+# scans, models and private media
+*.glb
+*.gltf
+*.obj
+*.ply
+*.usdz
+private/
+raw/
+
+# private notes and drafts
+drafts/
+
+# windows
+Thumbs.db
+desktop.ini
