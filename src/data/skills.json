@@ -1,5 +1,5 @@
 [
-  { "name": "networking", "group": "learning", "note": "learning networking through building a homelab" },
+  { "name": "networking", "group": "learning", "note": "learning DNS, DHCP, and virtualization" },
   { "name": "docker", "group": "assisted", "note": "runs my monitoring stack" },
   { "name": "programming", "group": "learning", "note": "learning to code" },
   { "name": "linux", "group": "know", "note": "can install and maintain multiple linux distros" }
