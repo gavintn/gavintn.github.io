@@ -1,6 +1,13 @@
 ﻿---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import skills from '../data/skills.json';
+
+const groups = [
+  { key: 'know', title: 'know' },
+  { key: 'assisted', title: 'set up with ai help' },
+  { key: 'learning', title: 'learning now' },
+];
 
 const entries = (await getCollection('log'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
@@ -20,7 +27,7 @@ const projects = (await getCollection('projects'))
 
   <main>
     <h1>gavintn</h1>
-    <p class="role">cs student exploring hardware, ai infrastructure and software</p>
+    <p class="role">student exploring hardware, ai infrastructure, networking, and software</p>
 
     <section>
       <h2>projects</h2>
@@ -34,6 +41,23 @@ const projects = (await getCollection('projects'))
           </li>
         ))}
       </ol>
+    </section>
+
+    <section>
+      <h2>skills</h2>
+      {groups.map((g) => (
+        <div>
+          <h3>{g.title}</h3>
+          <ul class="rows skills">
+            {skills.filter((s) => s.group === g.key).map((s) => (
+              <li>
+                <span>{s.name}</span>
+                <span class="dim">{s.note}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </section>
 
     <section>
