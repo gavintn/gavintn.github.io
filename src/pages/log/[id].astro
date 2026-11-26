@@ -13,8 +13,9 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 ---
-<Base title={entry.data.title}>
+<Base title={`${entry.data.title}: gavintn`}>
   <h1>{entry.data.title}</h1>
-  <p>{entry.data.type} · {entry.data.date.toISOString().slice(0, 10)}</p>
+  <p class="dim">{entry.data.type} · {entry.data.date.toISOString().slice(0, 10)}</p>
   <Content />
+  <p><a href="/log">← all entries</a></p>
 </Base>
