@@ -1,0 +1,83 @@
+<section id="subnet">
+  <h2>subnet visualizer</h2>
+  <p class="dim">type an address and drag the prefix. highlighted bits are the network part.</p>
+
+  <label for="ip">address</label>
+  <input id="ip" value="192.168.1.10" autocomplete="off" inputmode="decimal" />
+
+  <label for="prefix">prefix /<span id="plen">24</span></label>
+  <input id="prefix" type="range" min="8" max="30" value="24" />
+
+  <div id="bits" aria-label="32-bit address"></div>
+  <p id="err" class="dim"></p>
+
+  <ul class="rows subnet-out">
+    <li><span>mask</span><span class="dim" id="o-mask"></span></li>
+    <li><span>network</span><span class="dim" id="o-net"></span></li>
+    <li><span>broadcast</span><span class="dim" id="o-bc"></span></li>
+    <li><span>first host</span><span class="dim" id="o-first"></span></li>
+    <li><span>last host</span><span class="dim" id="o-last"></span></li>
+    <li><span>usable hosts</span><span class="dim" id="o-hosts"></span></li>
+  </ul>
+</section>
+
+<script>
+  const $ = (id: string) => document.getElementById(id)!;
+  const ipEl = $('ip') as HTMLInputElement;
+  const prefixEl = $('prefix') as HTMLInputElement;
+
+  const fmt = (n: number) =>
+    [n >>> 24, (n >>> 16) & 255, (n >>> 8) & 255, n & 255].join('.');
+
+  function parse(text: string): number | null {
+    const parts = text.trim().split('.');
+    if (parts.length !== 4) return null;
+    let n = 0;
+    for (const p of parts) {
+      if (!/^\d{1,3}$/.test(p) || Number(p) > 255) return null;
+      n = n * 256 + Number(p);
+    }
+    return n;
+  }
+
+  function update() {
+    const prefix = Number(prefixEl.value);
+    $('plen').textContent = String(prefix);
+    const ip = parse(ipEl.value);
+    const ids = ['o-mask', 'o-net', 'o-bc', 'o-first', 'o-last', 'o-hosts'];
+
+    if (ip === null) {
+      $('err').textContent = 'enter four numbers from 0 to 255, like 192.168.1.10';
+      $('bits').innerHTML = '';
+      ids.forEach((id) => ($(id).textContent = ''));
+      return;
+    }
+    $('err').textContent = '';
+
+    const mask = (0xffffffff << (32 - prefix)) >>> 0;
+    const network = (ip & mask) >>> 0;
+    const broadcast = (network | (~mask >>> 0)) >>> 0;
+
+    $('o-mask').textContent = fmt(mask);
+    $('o-net').textContent = fmt(network);
+    $('o-bc').textContent = fmt(broadcast);
+    $('o-first').textContent = fmt(network + 1);
+    $('o-last').textContent = fmt(broadcast - 1);
+    $('o-hosts').textContent = String(2 ** (32 - prefix) - 2);
+
+    const bits = ip.toString(2).padStart(32, '0');
+    $('bits').innerHTML = [0, 1, 2, 3]
+      .map((o) =>
+        '<div class="octet">' +
+        [...bits.slice(o * 8, o * 8 + 8)]
+          .map((b, i) => `<span class="${o * 8 + i < prefix ? 'net' : ''}">${b}</span>`)
+          .join('') +
+        '</div>'
+      )
+      .join('');
+  }
+
+  ipEl.addEventListener('input', update);
+  prefixEl.addEventListener('input', update);
+  update();
+</script>
