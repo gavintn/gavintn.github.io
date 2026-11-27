@@ -71,6 +71,19 @@ h3 {
   margin: 2rem 0 0.5rem;
 }
 
+#stream { margin: 1.5rem 0; height: 22rem; overflow: hidden; font-size: 0.85rem; }
+#stream div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#pause {
+  margin-left: 0.5rem; padding: 0.5rem 1rem; min-height: 44px;
+  background: none; color: var(--fg); border: 1px solid var(--accent);
+  font: inherit; cursor: pointer;
+}
+#pause:hover { background: var(--accent); color: var(--bg); }
+#q {
+  background: none; color: var(--fg); border: 1px solid var(--dim);
+  font: inherit; padding: 0.5rem; min-height: 44px; width: 100%; max-width: 16rem;
+}
+
 label { display: block; margin: 1.25rem 0 0.25rem; }
 #ip {
   background: none; color: var(--fg); border: 1px solid var(--dim);

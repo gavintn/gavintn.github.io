@@ -1,0 +1,60 @@
+<section id="rain">
+  <h2>metrics stream</h2>
+  <p class="dim">fake prometheus-style samples, random values. type part of a metric name to filter.</p>
+
+  <label for="q">filter</label>
+  <input id="q" placeholder="node_load" autocomplete="off" />
+  <button id="pause" type="button">pause</button>
+
+  <div id="stream" aria-hidden="true"></div>
+</section>
+
+<script>
+  const q = document.getElementById('q') as HTMLInputElement;
+  const pauseBtn = document.getElementById('pause') as HTMLButtonElement;
+  const stream = document.getElementById('stream')!;
+
+  const r = (min: number, max: number) => Math.random() * (max - min) + min;
+  const metrics: { name: string; value: () => string }[] = [
+    { name: 'node_load1', value: () => r(0.05, 1.8).toFixed(2) },
+    { name: 'node_memory_MemAvailable_bytes', value: () => Math.round(r(3e9, 9e9)).toString() },
+    { name: 'node_cpu_seconds_total{mode="idle"}', value: () => r(1e5, 9e5).toFixed(1) },
+    { name: 'node_network_receive_bytes_total', value: () => Math.round(r(1e8, 9e9)).toString() },
+    { name: 'node_filesystem_avail_bytes', value: () => Math.round(r(4e10, 9e10)).toString() },
+    { name: 'up{job="node"}', value: () => '1' },
+  ];
+
+  const lines: string[] = [];
+  let paused = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  pauseBtn.textContent = paused ? 'play' : 'pause';
+
+  function render() {
+    const f = q.value.trim();
+    const shown = lines.filter((l) => l.includes(f)).slice(0, 14);
+    stream.replaceChildren(
+      ...shown.map((text, i) => {
+        const el = document.createElement('div');
+        el.textContent = text;
+        el.style.opacity = String(1 - i / 15);
+        return el;
+      })
+    );
+  }
+
+  function tick() {
+    if (paused) return;
+    const m = metrics[Math.floor(Math.random() * metrics.length)];
+    const t = new Date().toISOString().slice(11, 19);
+    lines.unshift(`${t}  ${m.name}  ${m.value()}`);
+    if (lines.length > 60) lines.pop();
+    render();
+  }
+
+  pauseBtn.addEventListener('click', () => {
+    paused = !paused;
+    pauseBtn.textContent = paused ? 'play' : 'pause';
+  });
+  q.addEventListener('input', render);
+  setInterval(tick, 400);
+  tick();
+</script>
