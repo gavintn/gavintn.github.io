@@ -17,7 +17,6 @@ const projects = (await getCollection('projects'))
   .sort((a, b) => a.data.order - b.data.order);
 ---
 <Base title="gavintn: networking, homelab, learning to code">
-  <main>
     <h1>gavintn</h1>
     <p class="role">student exploring hardware, ai infrastructure, networking, and software</p>
 
@@ -75,10 +74,4 @@ const projects = (await getCollection('projects'))
       )}
       <p><a href="/log">all entries</a></p>
     </section>
-  </main>
-
-  <footer>
-    <a href="https://github.com/gavintn">github</a>
-    <span class="dim">type set in ia writer mono</span>
-  </footer>
 </Base>

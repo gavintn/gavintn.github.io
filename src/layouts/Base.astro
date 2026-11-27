@@ -5,7 +5,7 @@ import '../styles/global.css';
 
 const {
   title,
-  description = 'student learning networking and programming, building a homelab. projects, skills and a log of what i am learning.',
+  description = 'student exploring hardware, ai infrastructure, networking, and software. projects, skills and a log of what i am learning.',
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
@@ -18,6 +18,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="theme-color" content="#191919" />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
@@ -31,6 +33,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="twitter:image" content={new URL('/og.png', Astro.site)} />
   </head>
   <body>
+    <a class="skip" href="#main">skip to content</a>
     <header>
       <nav>
         <a href="/">home</a>
@@ -39,6 +42,13 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         <a href="/lab">lab</a>
       </nav>
     </header>
-    <slot />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <footer>
+      <a href="https://github.com/gavintn">github</a>
+      <a href="mailto:gavintn@outlook.com">email</a>
+      <span class="dim">type set in ia writer mono</span>
+    </footer>
   </body>
 </html>

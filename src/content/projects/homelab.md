@@ -1,7 +1,7 @@
 ---
 title: homelab
 order: 1
-status: shipped
+status: running
 blurb: proxmox home server with a monitoring stack
 ---
 ## overview

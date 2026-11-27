@@ -16,7 +16,7 @@ const projects = defineCollection({
   schema: z.object({
     title: z.string(),
     order: z.number(),
-    status: z.enum(['shipped', 'in progress', 'planned']),
+    status: z.enum(['running', 'shipped', 'in progress', 'planned']),
     blurb: z.string(),
   }),
 });

@@ -6,7 +6,7 @@ const projects = (await getCollection('projects')).sort(
   (a, b) => a.data.order - b.data.order
 );
 ---
-<Base title="projects">
+<Base title="projects: gavintn">
   <h1>projects</h1>
   <ol class="rows">
     {projects.map((p) => (
