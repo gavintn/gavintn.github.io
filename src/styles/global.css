@@ -96,6 +96,10 @@ label { display: block; margin: 1.25rem 0 0.25rem; }
 .octet .net { background: var(--accent); color: var(--bg); border-color: var(--accent); }
 .subnet-out li { grid-template-columns: 10rem 1fr; }
 
+#fz { width: 100%; height: auto; border: 1px solid #333; margin: 1.5rem 0; }
+#na, #nb { width: 100%; max-width: 16rem; accent-color: var(--accent); }
+.fusion-out li { grid-template-columns: 10rem 1fr; }
+
 .skills li { grid-template-columns: 14rem 1fr; }
 .log-rows li { grid-template-columns: 8rem 1fr auto; }
 
